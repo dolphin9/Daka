@@ -23,18 +23,16 @@ namespace Daka
         public DateTime StartDate;
         [JsonInclude]
         public DateTime[] DakaDate;
-
-        /// <summary>
-        /// 转换item
-        /// </summary>
-        /// <param name="item"></param>
-        public ITEM(Item item)
+        public bool IsDakaDay(DateTime dt) /// 可优化
         {
-            this.Id = item.Id();
-            this.Duration = item.Duration();
-            this.StartDate = item.StartDate();
-            this.DakaDate = item.getDakaDate();
+            foreach (DateTime d in DakaDate)
+            {
+                if (d.Date.Equals(dt.Date))
+                    return true;
+            }
+            return false;
         }
+
     }
     public class JsonIO
     {
@@ -43,25 +41,20 @@ namespace Daka
         [JsonInclude]
         public ITEM[] Items;
 
-        private Item[] items;
         
         /// <summary>
-        /// ItemList to JsonIO
+        /// (输出)ItemList to JsonIO
         /// </summary>
         /// <param name="itemLsit"></param>
         public JsonIO(ItemList itemLsit)
         {
             ITEM_AMOUNT = itemLsit.ItemAmount();
-            Items = new ITEM[ITEM_AMOUNT];
-            items = itemLsit.GetItems();
-            for(int i = 0; i < ITEM_AMOUNT; i++)
-            {
-                Items[i] = new ITEM(items[i]);
-            }
-
+            Items = itemLsit.GetItems();
         }
+
+
         /// <summary>
-        /// JsonString to  JsonIO 
+        /// （输入）JsonString to  JsonIO 
         /// </summary>
         /// <param name="jsonString"></param>
         public JsonIO(string jsonString)
@@ -70,7 +63,11 @@ namespace Daka
             this.Items = tmp.Items;
             this.ITEM_AMOUNT = tmp.ITEM_AMOUNT;
         }
-        
+
+
+        /// <summary>
+        /// Deserialize必须定义无参构造
+        /// </summary>
         public JsonIO(){ }
 
     }

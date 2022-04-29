@@ -21,7 +21,7 @@ namespace Daka
         /// </summary>
         private Dictionary<string,Item> items;
         /// <summary>
-        /// itemAmount记录项目编号
+        /// itemAmount记录项目总数
         /// </summary>
         private int itemAmount;
 
@@ -56,20 +56,32 @@ namespace Daka
         public int ItemAmount() { return itemAmount; }
 
         /// <summary>
-        /// 得到items
+        /// 将 items 存为 JsonOI.ITEM 类型
         /// </summary>
         /// <returns></returns>
-        public Item[] GetItems()
+        public ITEM[] GetItems()
         {
-            Item[] ret = new Item[itemAmount];
+            ITEM[] ret = new ITEM[itemAmount];
             int i = 0;
             foreach (KeyValuePair<string, Item> item in items)
             {
-                ret[i] = item.Value;
+                ret[i].Id = item.Value.Id();
+                ret[i].Duration = item.Value.Duration();
+                ret[i].StartDate = item.Value.StartDate();
+                ret[i].DakaDate = item.Value.getDakaDate();
                 i++;
             }
             return ret;
         }
+
+        /// <summary>
+        /// 增加一个Item
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="startdate">开始日期</param>
+        /// <param name="duration">持续时间</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
         public void AddItem(string name,DateTime startdate, int duration)
         {
             if (name == null || name == "")
@@ -87,23 +99,23 @@ namespace Daka
             }
             
         }
-        public void AddItem(string name, int duration)
+
+        /// <summary>
+        /// 删除一个Item
+        /// </summary>
+        /// <param name="name"></param>
+        public void DeletItem(string name)
         {
-            AddItem(name, DateTime.Now, duration);
-        }
-        public void AddItem(Item item)
-        {
-            items.Add(item.Id(),item);
-            foreach (KeyValuePair<string, Item> item2 in items)
+            try
             {
-                Console.WriteLine(item2.Value.Id());
+                items.Remove(name);
             }
-            itemAmount++;
-            Console.WriteLine("AddItem Done!");
-            foreach ( KeyValuePair<string,Item> item2 in items)
+            catch (Exception ex)
             {
-                Console.WriteLine(item2.Value.Id() + ":" + item2.Value.Duration().ToString());
+                throw ex;
             }
         }
+
+
     }
 }

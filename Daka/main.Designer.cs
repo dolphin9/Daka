@@ -40,10 +40,9 @@
             this.Date = new System.Windows.Forms.Label();
             this.listView1 = new System.Windows.Forms.ListView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.新建打卡ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.查看项目ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.修改打卡信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.添加新打卡 = new System.Windows.Forms.ToolStripMenuItem();
+            this.修改打卡 = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置 = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dataSet1 = new System.Data.DataSet();
@@ -172,10 +171,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.新建打卡ToolStripMenuItem,
-            this.查看项目ToolStripMenuItem,
-            this.帮助ToolStripMenuItem,
-            this.修改打卡信息ToolStripMenuItem,
+            this.添加新打卡,
+            this.修改打卡,
+            this.设置,
             this.帮助ToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -183,30 +181,26 @@
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // 新建打卡ToolStripMenuItem
+            // 添加新打卡
             // 
-            this.新建打卡ToolStripMenuItem.Name = "新建打卡ToolStripMenuItem";
-            this.新建打卡ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
-            this.新建打卡ToolStripMenuItem.Text = "添加新打卡";
-            this.新建打卡ToolStripMenuItem.Click += new System.EventHandler(this.新建打卡ToolStripMenuItem_Click);
+            this.添加新打卡.Name = "添加新打卡";
+            this.添加新打卡.Size = new System.Drawing.Size(80, 21);
+            this.添加新打卡.Text = "添加新打卡";
+            this.添加新打卡.Click += new System.EventHandler(this.添加新打卡_Click);
             // 
-            // 查看项目ToolStripMenuItem
+            // 修改打卡
             // 
-            this.查看项目ToolStripMenuItem.Name = "查看项目ToolStripMenuItem";
-            this.查看项目ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
-            this.查看项目ToolStripMenuItem.Text = "删除打卡事项";
+            this.修改打卡.Name = "修改打卡";
+            this.修改打卡.Size = new System.Drawing.Size(68, 21);
+            this.修改打卡.Text = "修改打卡";
+            this.修改打卡.Click += new System.EventHandler(this.修改打卡_Click);
             // 
-            // 帮助ToolStripMenuItem
+            // 设置
             // 
-            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
-            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
-            this.帮助ToolStripMenuItem.Text = "查看历史打卡";
-            // 
-            // 修改打卡信息ToolStripMenuItem
-            // 
-            this.修改打卡信息ToolStripMenuItem.Name = "修改打卡信息ToolStripMenuItem";
-            this.修改打卡信息ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
-            this.修改打卡信息ToolStripMenuItem.Text = "修改打卡信息";
+            this.设置.Name = "设置";
+            this.设置.Size = new System.Drawing.Size(44, 21);
+            this.设置.Text = "设置";
+            this.设置.Click += new System.EventHandler(this.设置_Click);
             // 
             // 帮助ToolStripMenuItem1
             // 
@@ -255,18 +249,17 @@
         private System.Windows.Forms.Button confirm;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 新建打卡ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 查看项目ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 添加新打卡;
+        private System.Windows.Forms.ToolStripMenuItem 修改打卡;
         private System.Data.DataSet dataSet1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Weekday;
         private System.Windows.Forms.Label Time;
         private System.Windows.Forms.Label Date;
-        private System.Windows.Forms.ToolStripMenuItem 修改打卡信息ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem1;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ToolStripMenuItem 设置;
     }
 }
 

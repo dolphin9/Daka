@@ -14,12 +14,17 @@ namespace Daka
 {
     public partial class main : Form
     {
-        private DateTime currentDateTime;
+        
         public ItemList itemList;
 
         private const string ItemListFileName = "ItemList.json";
+        //private const string ItemListPath = "./";
 
+        //private const string version = "0.0";
 
+        /// <summary>
+        /// 主窗口生成
+        /// </summary>
         public main()
         {
             InitializeComponent();
@@ -53,24 +58,103 @@ namespace Daka
             Show_Listview();
         }
 
+       /// <summary>
+        /// timer 控制时钟刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            showDateTime();
+        }
+
+        /// <summary>
+        /// 左侧上方时间信息生成
+        /// </summary>
+        public void showDateTime()
+        {
+            DateTime currentDateTime = DateTime.Now;
+            Date.Text = currentDateTime.ToLongDateString().ToString();
+            Time.Text = currentDateTime.ToLongTimeString().ToString();
+            Weekday.Text = currentDateTime.DayOfWeek.ToString();
+            Date.Update();
+            Time.Update();
+            Weekday.Update();
+        }
+
+        /// <summary>
+        /// 左侧日期选择框数据改变：改变后查看所选日期的任务完成情况
+        /// 日期不为当天时，无法保存checklist状态。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value.Date != DateTime.Today)
+            {
+                confirm.Enabled = false;
+            }
+            else
+            {
+                confirm.Enabled = true;
+                Show_checklist(dateTimePicker1.Value);
+            }
+        }
+
+        /// <summary>
+        /// 左侧下方check李斯特生成，显示dt当天的打卡情况
+        /// </summary>
+        /// <param name="dt"></param>
         public void Show_checklist(DateTime dt)
         {
             checkedListBox1.Items.Clear();
-            Item[] items = itemList.GetItems();
+            ITEM[] items = itemList.GetItems();
             int itemNum = items.Count();
-            foreach(Item item in items)
+            foreach(ITEM item in items)
             {
-                checkedListBox1.Items.Add(item.Id());
+                checkedListBox1.Items.Add(item.Id);
             }
             checkedListBox1.Update();
             checkedListBox1.Show();
         }
 
+        /// <summary>
+        /// 左侧下方“记录”按钮按下后的操作：
+        /// 1、保存打卡记录（待实现）;
+        /// 2、保存ItemList信息 ;
+        /// 3、重绘所有list ;
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void confirm_Click(object sender, EventArgs e)
+        {
+            saveItemList();
+            drawLists();
+        }
+
+        /////////////////////////////////////////
+        ///分割线
+        /////////////////////////////////////////
+        
+        /// <summary>
+        /// 新建打卡按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 添加新打卡_Click(object sender, EventArgs e)
+        {
+            NewDaka form2 = new NewDaka();
+            form2.mydelegateEvent += NewItemFromForm2;
+            form2.ShowDialog(this);
+        }
+        /// <summary>
+        /// 右侧打卡表格生成（待改动）
+        /// </summary>
         public void Show_Listview()
         {
             
             listView1.Items.Clear();
-            Item[] items = itemList.GetItems();
+            ITEM[] items = itemList.GetItems();
             listView1.BeginUpdate();
             listView1.View = View.Details;
             //ColumnHeader columnHeader = new ColumnHeader();
@@ -84,10 +168,10 @@ namespace Daka
             }
 
             //string[] subItem = { "1", "2", "3" };
-            foreach (Item item in items)
+            foreach (ITEM item in items)
             {
                 ListViewItem listViewItem = new ListViewItem();///
-                listViewItem.Text = item.Id();
+                listViewItem.Text = item.Id;
                 listViewItem.SubItems.Add(item.IsDakaDay(DateTime.Today) ? "yes" :" ");
                 listViewItem.SubItems.Add(item.IsDakaDay(DateTime.Today.AddDays(-1)) ? "yes" : " ");
                 listView1.Items.Add(listViewItem);
@@ -97,49 +181,25 @@ namespace Daka
             listView1.Show();
 
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
+         
+        /// <summary>
+        /// 绘制checklist与打卡记录Listview；
+        /// checklist为当天
+        /// </summary>
+        public void drawLists()
         {
-            showDateTime();
+            Show_checklist(DateTime.Today);
+            Show_Listview();
         }
 
-        public void showDateTime()
-        {
-            currentDateTime = DateTime.Now;
-            Date.Text = currentDateTime.ToLongDateString().ToString();
-            Time.Text = currentDateTime.ToLongTimeString().ToString();
-            Weekday.Text = currentDateTime.DayOfWeek.ToString();
-            Date.Update();
-            Time.Update();
-            Weekday.Update();
-        }
+        //////////////////////////////////////////
+        ///
+        //////////////////////////////////////////
 
-
-
-        private void NewItemFromForm2(Item item)
-        {
-            Console.WriteLine(item.Id() + ":" + item.ToString());
-            itemList.AddItem(item);
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            if (dateTimePicker1.Value.Date != currentDateTime.Date)
-            {
-                confirm.Enabled = false;
-            }
-            else
-            {
-                confirm.Enabled = true;
-                Show_checklist(dateTimePicker1.Value);
-            }
-        }
-
-        private void confirm_Click(object sender, EventArgs e)
-        {
-            saveItemList();
-        }
-
+        /// <summary>
+        /// 保存ItemList类为JsonIO并存入ItemListFileName指向的文件（json）。
+        /// （ItemListFileName后续可设为自填选项）
+        /// </summary>
         private void saveItemList()
         {
             JsonIO save = new JsonIO(itemList);
@@ -152,11 +212,23 @@ namespace Daka
             File.WriteAllText(ItemListFileName, jsonString);
         }
 
-        private void 新建打卡ToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 来自新建项目的item，添加到项目列表中（委托）
+        /// </summary>
+        /// <param name="item"></param>
+        private void NewItemFromForm2(string id, int duration, DateTime startdate)
         {
-            NewDaka form2 = new NewDaka();
-            form2.mydelegateEvent += NewItemFromForm2;
-            form2.ShowDialog(this);
+            itemList.AddItem(id, startdate, duration);
+        }
+
+        private void 修改打卡_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 设置_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

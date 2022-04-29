@@ -10,7 +10,7 @@ namespace Daka
     /// <summary>
     /// 记录打卡项目的具体信息
     /// </summary>
-    public class Item
+    internal class Item
     {
         private string id;
         private int duration;
@@ -64,15 +64,7 @@ namespace Daka
         public int Duration() { return duration; }
         public DateTime StartDate() { return startDate; }
         public DateTime StopDate() { return stopDate; }
-        public bool IsDakaDay(DateTime dt) /// 可优化
-        {
-            foreach (DateTime d in dakaDate)
-            {
-                if (d.Date.Equals(dt.Date))
-                    return true;
-            }
-            return false;
-        }
+
         /// <summary>
         /// 得到打卡日期列表
         /// </summary>
