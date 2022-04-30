@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Daka
 {
-    public partial class HelpForm : Form
+    public partial class Settings : Form
     {
-        public HelpForm()
+        public Settings()
         {
             InitializeComponent();
         }

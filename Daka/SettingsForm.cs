@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Daka
 {
-    public partial class HelpForm : Form
+    public partial class SettingsForm : Form
     {
-        public HelpForm()
+        public SettingsForm()
         {
             InitializeComponent();
+        }
+
+        private void chooseFilePath_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1 = new SaveFileDialog();
         }
     }
 }

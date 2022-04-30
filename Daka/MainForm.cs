@@ -17,6 +17,7 @@ namespace Daka
         
         public ItemList itemList;
 
+        //private string FilePath = System.Environment.CurrentDirectory;
         private const string ItemListFileName = "ItemList.json";
         //private const string ItemListPath = "./";
 
@@ -291,6 +292,12 @@ namespace Daka
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void 设置_Click(object sender, EventArgs e)
+        {
+            SettingsForm form = new SettingsForm();
+            form.ShowDialog(this);
+        }
+
+        private void 帮助ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }

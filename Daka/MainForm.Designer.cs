@@ -170,7 +170,6 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
             this.listView1.ItemActivate += new System.EventHandler(this.ListView双击项目菜单);
-            //this.listView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListView右键新建项);
             // 
             // menuStrip1
             // 
@@ -203,6 +202,7 @@
             this.帮助ToolStripMenuItem1.Name = "帮助ToolStripMenuItem1";
             this.帮助ToolStripMenuItem1.Size = new System.Drawing.Size(44, 21);
             this.帮助ToolStripMenuItem1.Text = "帮助";
+            this.帮助ToolStripMenuItem1.Click += new System.EventHandler(this.帮助ToolStripMenuItem1_Click);
             // 
             // timer1
             // 
