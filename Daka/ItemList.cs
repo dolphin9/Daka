@@ -155,5 +155,10 @@ namespace Daka
                 AddItem(item);
             }
         }
+
+        public void Daka(string name)
+        {
+            items[name].Daka();
+        }
     }
 }

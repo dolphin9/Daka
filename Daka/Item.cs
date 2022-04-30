@@ -53,9 +53,10 @@ namespace Daka
 
         public void Daka()
         {
-            if (dakaDate.Last().Date != DateTime.Now)
-            {
+            if (dakaDate.Count == 0 || dakaDate[dakaDays - 1].Date != DateTime.Today)
+            { 
                 dakaDate.Add(DateTime.Now);
+                //dakaDate[dakaDays] = DateTime.Today;
                 dakaDays++;
             }
         }
@@ -72,13 +73,14 @@ namespace Daka
         /// <returns></returns>
         public DateTime[] getDakaDate()
         {
-            DateTime[] dakaDate = new DateTime[dakaDays];
+            DateTime[] ret = new DateTime[dakaDays];
             int i = 0;
             foreach (DateTime d in dakaDate)
             {
-                dakaDate[i++] = d;
+                ret[i] = d;
+                i++;
             }
-            return dakaDate;
+            return ret;
         }
 
     }

@@ -58,6 +58,7 @@ namespace Daka
             Show_Listview();
         }
 
+
        /// <summary>
         /// timer 控制时钟刷新
         /// </summary>
@@ -82,6 +83,7 @@ namespace Daka
             Weekday.Update();
         }
 
+
         /// <summary>
         /// 左侧日期选择框数据改变：改变后查看所选日期的任务完成情况
         /// 日期不为当天时，无法保存checklist状态。
@@ -101,6 +103,7 @@ namespace Daka
             }
         }
 
+
         /// <summary>
         /// 左侧下方check李斯特生成，显示dt当天的打卡情况
         /// </summary>
@@ -118,6 +121,7 @@ namespace Daka
             checkedListBox1.Show();
         }
 
+
         /// <summary>
         /// 左侧下方“记录”按钮按下后的操作：
         /// 1、保存打卡记录（待实现）;
@@ -128,13 +132,21 @@ namespace Daka
         /// <param name="e"></param>
         private void confirm_Click(object sender, EventArgs e)
         {
+            foreach(Object itemChecked in checkedListBox1.CheckedItems)
+            {
+                Console.WriteLine("check:" + itemChecked.ToString());
+                itemList.Daka(itemChecked.ToString());
+            }
+
             saveItemList();
             drawLists();
         }
 
+
         /////////////////////////////////////////
         ///分割线
         /////////////////////////////////////////
+        ///
         
         /// <summary>
         /// 新建打卡按钮
@@ -147,6 +159,7 @@ namespace Daka
             form2.mydelegateEvent += NewItemFromForm2;
             form2.ShowDialog(this);
         }
+
 
         /// <summary>
         /// 右侧打卡表格生成（待改动）
@@ -183,6 +196,7 @@ namespace Daka
             listView1.Show();
 
         }
+
          
         /// <summary>
         /// 绘制checklist与打卡记录Listview；
@@ -214,6 +228,7 @@ namespace Daka
             File.WriteAllText(ItemListFileName, jsonString);
         }
 
+
         /// <summary>
         /// 来自新建项目的item，添加到项目列表中（委托）
         /// </summary>
@@ -221,7 +236,11 @@ namespace Daka
         private void NewItemFromForm2(string id, int duration, DateTime startdate)
         {
             itemList.NewItem(id, startdate, duration);
+            saveItemList();
+            drawLists();
         }
+
+
         /// <summary>
         /// 修改(委托)
         /// </summary>
@@ -238,7 +257,10 @@ namespace Daka
             {
                 itemList.changeItem(id, itemInfo);
             }
+            saveItemList();
+            drawLists();
         }
+
 
         private void ListView双击项目菜单(object sender, EventArgs e)
         {
@@ -247,9 +269,13 @@ namespace Daka
             ChangeDaka form2 = new ChangeDaka(ref itemList, itemName);
             form2.changeItemDelegateEvent += ChangeItemInfo;
             form2.ShowDialog(this);
-            drawLists();
             
         }
+
+
+
+
+
 
         /*private void ListView右键新建项(Object sender, MouseEventArgs e)
         {
