@@ -41,11 +41,11 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.添加新打卡 = new System.Windows.Forms.ToolStripMenuItem();
-            this.修改打卡 = new System.Windows.Forms.ToolStripMenuItem();
             this.设置 = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dataSet1 = new System.Data.DataSet();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -156,23 +156,26 @@
             // 
             // listView1
             // 
+            this.listView1.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 25);
+            this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(581, 425);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
+            this.listView1.ItemActivate += new System.EventHandler(this.ListView双击项目菜单);
+            //this.listView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListView右键新建项);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.添加新打卡,
-            this.修改打卡,
             this.设置,
             this.帮助ToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -187,13 +190,6 @@
             this.添加新打卡.Size = new System.Drawing.Size(80, 21);
             this.添加新打卡.Text = "添加新打卡";
             this.添加新打卡.Click += new System.EventHandler(this.添加新打卡_Click);
-            // 
-            // 修改打卡
-            // 
-            this.修改打卡.Name = "修改打卡";
-            this.修改打卡.Size = new System.Drawing.Size(68, 21);
-            this.修改打卡.Text = "修改打卡";
-            this.修改打卡.Click += new System.EventHandler(this.修改打卡_Click);
             // 
             // 设置
             // 
@@ -216,6 +212,11 @@
             // dataSet1
             // 
             this.dataSet1.DataSetName = "NewDataSet";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // main
             // 
@@ -250,7 +251,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 添加新打卡;
-        private System.Windows.Forms.ToolStripMenuItem 修改打卡;
         private System.Data.DataSet dataSet1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
@@ -260,6 +260,7 @@
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ToolStripMenuItem 设置;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

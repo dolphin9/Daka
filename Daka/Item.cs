@@ -62,6 +62,7 @@ namespace Daka
 
         public string Id() { return id; }
         public int Duration() { return duration; }
+        public void ChangeDuration(int x) { duration = x; }
         public DateTime StartDate() { return startDate; }
         public DateTime StopDate() { return stopDate; }
 

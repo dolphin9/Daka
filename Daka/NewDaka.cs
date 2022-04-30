@@ -20,6 +20,7 @@ namespace Daka
         public NewDaka()
         {
             InitializeComponent();
+            duration = 0;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -38,11 +39,16 @@ namespace Daka
 
                 if(duration > 0 && duration < 365000)
                 {
-                    dateTimePicker1.Value = DateTime.Now.Date.AddDays(duration);
+                    dateTimePicker1.Value = DateTime.Today.AddDays(duration);
                 }
-                else if(duration != 0)
+                else if(duration > 0)
                 {
                     MessageBox.Show("真的吗?", "???", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question);
+                    textBox2.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("截止日期不能早于明天哦", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     textBox2.Text = "";
                 }
 
@@ -52,8 +58,12 @@ namespace Daka
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            dt = dateTimePicker1.Value - DateTime.Today;
-            duration = dt.Days;
+            if(dateTimePicker1.Value != DateTime.Today.AddDays(duration))
+            {
+                dt = dateTimePicker1.Value - DateTime.Today;
+                duration = dt.Days;
+                textBox2.Text = duration.ToString();
+            }
         }
 
 

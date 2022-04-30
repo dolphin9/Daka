@@ -77,10 +77,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeDaka.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeDaka.Designer.cs">
+      <DependentUpon>ChangeDaka.cs</DependentUpon>
+    </Compile>
     <Compile Include="JsonIO.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
-    <Compile Include="DailyLogs.cs" />
     <Compile Include="main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +106,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeDaka.resx">
+      <DependentUpon>ChangeDaka.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>

@@ -32,6 +32,12 @@ namespace Daka
             }
             return false;
         }
+        
+        public DateTime StopDate()
+        {
+            return StartDate.AddDays(Duration);
+        }
+
 
     }
     public class JsonIO

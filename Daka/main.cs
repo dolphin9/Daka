@@ -147,6 +147,7 @@ namespace Daka
             form2.mydelegateEvent += NewItemFromForm2;
             form2.ShowDialog(this);
         }
+
         /// <summary>
         /// 右侧打卡表格生成（待改动）
         /// </summary>
@@ -154,6 +155,7 @@ namespace Daka
         {
             
             listView1.Items.Clear();
+            listView1.Columns.Clear();
             ITEM[] items = itemList.GetItems();
             listView1.BeginUpdate();
             listView1.View = View.Details;
@@ -218,14 +220,50 @@ namespace Daka
         /// <param name="item"></param>
         private void NewItemFromForm2(string id, int duration, DateTime startdate)
         {
-            itemList.AddItem(id, startdate, duration);
+            itemList.NewItem(id, startdate, duration);
         }
-
-        private void 修改打卡_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 修改(委托)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="id_new"></param>
+        /// <param name="duration"></param>
+        private void ChangeItemInfo(string id, ITEM itemInfo, bool needDelete)
         {
-
+            if (needDelete)
+            {
+                itemList.DeleteItem(id);
+            }
+            else
+            {
+                itemList.changeItem(id, itemInfo);
+            }
         }
 
+        private void ListView双击项目菜单(object sender, EventArgs e)
+        {
+            string itemName = listView1.SelectedItems[0].Text;
+            Console.WriteLine(itemName);
+            ChangeDaka form2 = new ChangeDaka(ref itemList, itemName);
+            form2.changeItemDelegateEvent += ChangeItemInfo;
+            form2.ShowDialog(this);
+            drawLists();
+            
+        }
+
+        /*private void ListView右键新建项(Object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                
+            }
+        }*/
+
+        /// <summary>
+        /// 设置窗口-------------------待写
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 设置_Click(object sender, EventArgs e)
         {
 

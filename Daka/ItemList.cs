@@ -65,11 +65,7 @@ namespace Daka
             int i = 0;
             foreach (KeyValuePair<string, Item> item in items)
             {
-                ret[i].Id = item.Value.Id();
-                ret[i].Duration = item.Value.Duration();
-                ret[i].StartDate = item.Value.StartDate();
-                ret[i].DakaDate = item.Value.getDakaDate();
-                i++;
+                ret[i++] = getItemInfo(item.Key);
             }
             return ret;
         }
@@ -82,7 +78,7 @@ namespace Daka
         /// <param name="duration">持续时间</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
-        public void AddItem(string name,DateTime startdate, int duration)
+        public void NewItem(string name,DateTime startdate, int duration)
         {
             if (name == null || name == "")
             {
@@ -99,12 +95,28 @@ namespace Daka
             }
             
         }
+        public void AddItem(ITEM item)
+        {
+            if (item.Id == null ||item.Id == "")
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (items.ContainsKey(item.Id))
+            {
+                throw new InvalidOperationException("name");
+            }
+            else
+            {
+                items.Add(item.Id, new Item(item));
+                itemAmount++;
+            }
+        }
 
         /// <summary>
         /// 删除一个Item
         /// </summary>
         /// <param name="name"></param>
-        public void DeletItem(string name)
+        public void DeleteItem(string name)
         {
             try
             {
@@ -112,10 +124,36 @@ namespace Daka
             }
             catch (Exception ex)
             {
+                Console.WriteLine("删除失败");
                 throw ex;
             }
+            items.Remove(name);
+            Console.WriteLine("items.count = " + items.Count);
+            Console.WriteLine(name+":" + items.ContainsKey(name));
+            itemAmount--;
         }
 
+        public ITEM getItemInfo(string name)
+        {
+            ITEM item;
+            item.Id = items[name].Id();
+            item.Duration = items[name].Duration();
+            item.StartDate = items[name].StartDate();
+            item.DakaDate = items[name].getDakaDate();
+            return item;
+        }
 
+        public void changeItem(string name, ITEM item)
+        {
+            if (name.Equals(item))
+            {
+                items[name].ChangeDuration(item.Duration);
+            }
+            else
+            {
+                DeleteItem(name);
+                AddItem(item);
+            }
+        }
     }
 }
