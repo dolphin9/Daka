@@ -32,7 +32,7 @@
             this.remainDays = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.StopDatePicker = new System.Windows.Forms.DateTimePicker();
             this.itemName = new System.Windows.Forms.TextBox();
             this.ConfirmButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -78,11 +78,11 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(92, 151);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 21);
-            this.dateTimePicker1.TabIndex = 11;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.StopDatePicker.Location = new System.Drawing.Point(92, 151);
+            this.StopDatePicker.Name = "dateTimePicker1";
+            this.StopDatePicker.Size = new System.Drawing.Size(200, 21);
+            this.StopDatePicker.TabIndex = 11;
+            this.StopDatePicker.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // itemName
             // 
@@ -151,7 +151,7 @@
             this.Controls.Add(this.remainDays);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.StopDatePicker);
             this.Controls.Add(this.itemName);
             this.Controls.Add(this.ConfirmButton);
             this.Controls.Add(this.label1);
@@ -168,7 +168,7 @@
         private System.Windows.Forms.TextBox remainDays;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker StopDatePicker;
         private System.Windows.Forms.TextBox itemName;
         private System.Windows.Forms.Button ConfirmButton;
         private System.Windows.Forms.Label label1;

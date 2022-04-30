@@ -21,6 +21,7 @@ namespace Daka
         {
             InitializeComponent();
             duration = 0;
+            item.StartDate = DateTime.Today;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -39,7 +40,8 @@ namespace Daka
 
                 if(duration > 0 && duration < 365000)
                 {
-                    dateTimePicker1.Value = DateTime.Today.AddDays(duration);
+                    item.Duration = duration;
+                    dateTimePicker1.Value = item.StopDate();
                 }
                 else if(duration > 0)
                 {
@@ -58,11 +60,15 @@ namespace Daka
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            if(dateTimePicker1.Value != DateTime.Today.AddDays(duration))
+            if(textBox2.Text == "")
             {
-                dt = dateTimePicker1.Value - DateTime.Today;
-                duration = dt.Days;
-                textBox2.Text = duration.ToString();
+                return;
+            }
+
+            if(dateTimePicker1.Value != item.StopDate())
+            {
+                item.Duration = item.DaysFromStartDate(dateTimePicker1.Value);
+                textBox2.Text = item.Duration.ToString();
             }
         }
 

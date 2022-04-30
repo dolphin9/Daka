@@ -22,26 +22,21 @@ namespace Daka
             itemInfo = itemList.getItemInfo(ItemId);
 
 
-            itemName.Text = itemInfo.Id;
-            
-            totalDays.Text = " / " + (itemInfo.Duration + 1).ToString();
-
-            DateTime dt = itemInfo.StopDate();
-            dateTimePicker1.Value = dt;
-            Console.WriteLine(dateTimePicker1.Value.ToString() + " = " + dt.ToString());
-              
-            remainDays.Text = remaindays().ToString() ;
+            itemName.Text = itemInfo.Id;            
+            totalDays.Text = " / " + (itemInfo.Duration + 1).ToString();            
+            StopDatePicker.Value = itemInfo.StopDate();              
+            remainDays.Text = itemInfo.RemainDays().ToString() ;
 
             itemName.Enabled = false;
             remainDays.Enabled = false;
-            dateTimePicker1.Enabled = false;
+            StopDatePicker.Enabled = false;
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
         {
             itemName.Enabled = true;
             remainDays.Enabled = true;
-            dateTimePicker1.Enabled = true;
+            StopDatePicker.Enabled = true;
         }
 
         public delegate void changeItemDelegate(string id, ITEM itemInfo, bool DeleteOrNot);
@@ -82,7 +77,7 @@ namespace Daka
             {
                 try
                 {
-                     rd = Convert.ToInt32(remainDays.Text);
+                    Convert.ToInt32(remainDays.Text);
                 }
                 catch (FormatException ex)
                 {
@@ -91,24 +86,21 @@ namespace Daka
                     return;
                 }
 
-                if (rd >= 0 && rd < 365000)
-                {
-                    if(rd == 0)
-                    {
-                        if(MessageBox.Show("确定结束这项打卡吗?", "结束打卡", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-                        {
-                            remainDays.Text = remaindays().ToString();
-                            return;
-                        }
-                    }
-                    DateTime stopDate = DateTime.Today.AddDays(rd);
-                    itemInfo.Duration = (stopDate - itemInfo.StartDate).Days;
-                    dateTimePicker1.Value = stopDate;
-                    totalDays.Text = " / " + (itemInfo.Duration +1).ToString();
+                rd = Convert.ToInt32(remainDays.Text);
+                if (rd > 0 && rd < 365000)
+                {                      
+                    DateTime stopDate = itemInfo.StopDate().AddDays(rd - itemInfo.RemainDays());
+                    itemInfo.Duration = itemInfo.DaysFromStartDate(stopDate);
+                    StopDatePicker.Value = stopDate;
+                    totalDays.Text = " / " + itemInfo.Duration.ToString();
                 }
                 else if (rd > 0)
                 {
                     MessageBox.Show("真的吗?", "???", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question);
+                    remainDays.Text = "";
+                }
+                else
+                {
                     remainDays.Text = "";
                 }
             }
@@ -116,21 +108,18 @@ namespace Daka
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            if(remaindays() != itemInfo.Duration)
-            {
-                totalDays.Text = " / " + ((dateTimePicker1.Value - itemInfo.StartDate).Days + 1).ToString();          
-                remainDays.Text = remaindays().ToString();
-            }
+            if(remainDays.Text == "")         {    return;   }
 
-            
+            if(StopDatePicker.Value != itemInfo.StopDate())
+            {
+                itemInfo.Duration = itemInfo.DaysFromStartDate(StopDatePicker.Value);
+                totalDays.Text = " / " + itemInfo.Duration.ToString();          
+                remainDays.Text = itemInfo.RemainDays().ToString();
+            }            
         }
         private bool isNotNull(string s)
         {
             return s != null && s.Length > 0;
-        }
-
-        private int remaindays(){
-            return (dateTimePicker1.Value.Date - DateTime.Today).Days;
         }
 
     }

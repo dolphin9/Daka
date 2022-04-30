@@ -35,7 +35,27 @@ namespace Daka
         
         public DateTime StopDate()
         {
-            return StartDate.AddDays(Duration);
+            return StartDate.AddDays( Duration - 1 );
+        }
+
+        public int DaysFromStartDate(DateTime StopDate)
+        {
+            int days = (StopDate.Date - StartDate.Date).Days;
+            return days + 1;
+        }
+        public int DaysFromToDay(DateTime StopDate)
+        {
+            int days = (StopDate.Date - DateTime.Today).Days;
+            return days + 1;
+        }
+
+        public int RemainDays()
+        {
+            return (StopDate().Date - DateTime.Today).Days + 1;
+        }
+        public int RemainDays (DateTime StopDate)
+        {
+            return (StopDate.Date - DateTime.Today).Days +1;
         }
 
 
