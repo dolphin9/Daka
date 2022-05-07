@@ -38,7 +38,7 @@
             this.ChangeViewDays = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,13 +52,31 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Location = new System.Drawing.Point(162, 135);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(56, 21);
             this.numericUpDown1.TabIndex = 1;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // chooseFilePath
             // 
+            this.chooseFilePath.Enabled = false;
             this.chooseFilePath.Location = new System.Drawing.Point(372, 50);
             this.chooseFilePath.Name = "chooseFilePath";
             this.chooseFilePath.Size = new System.Drawing.Size(75, 23);
@@ -111,6 +129,7 @@
             this.ChangeViewDays.TabIndex = 7;
             this.ChangeViewDays.Text = "修改";
             this.ChangeViewDays.UseVisualStyleBackColor = true;
+            this.ChangeViewDays.Click += new System.EventHandler(this.ChangeViewDays_Click);
             // 
             // resetButton
             // 
@@ -129,6 +148,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "确认修改";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // SettingsForm
             // 
@@ -165,6 +185,6 @@
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.Button ChangeViewDays;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
