@@ -17,7 +17,7 @@ namespace Daka
         
         public ItemList itemList;
 
-        //private string FilePath = System.Environment.CurrentDirectory;
+        private string FilePath = System.Environment.CurrentDirectory;
         private const string ItemListFileName = "ItemList.json";
         //private const string ItemListPath = "./";
 
