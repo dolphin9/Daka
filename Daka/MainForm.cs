@@ -17,9 +17,10 @@ namespace Daka
         
         public ItemList itemList;
 
-        private string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Daka";
         private const string ItemListFileName = "ItemList.json";
-       
+        private string ItemListFilePath;
+        private int viewDays = 5;
 
         /// <summary>
         /// 主窗口生成
@@ -29,19 +30,13 @@ namespace Daka
             InitializeComponent();
             showDateTime();
 
-            if (File.Exists(ItemListFileName))
+            ItemListFilePath = Path.Combine(FilePath, ItemListFileName);
+
+            if (File.Exists(ItemListFilePath))
             {
-                /*Binary IO 只能读取固定结构的数据，弃用
-                using (var stream = File.Open(ItemListFileName, FileMode.Open))
-                {
-                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
-                    {
-                    }
-                }
-                */
                 ///使用Json序列化
                 ///
-                string jsonString = File.ReadAllText(ItemListFileName);
+                string jsonString = File.ReadAllText(ItemListFilePath);
                 JsonIO input = new JsonIO(jsonString);
                 itemList = new ItemList(input);
                 Console.WriteLine("readok!");
@@ -170,12 +165,8 @@ namespace Daka
             ITEM[] items = itemList.GetItems();
             listView1.BeginUpdate();
             listView1.View = View.Details;
-            //ColumnHeader columnHeader = new ColumnHeader();
-            //columnHeader.Text = "打卡事项";
-            //columnHeader.Width = 120;
-            //columnHeader.TextAlign = HorizontalAlignment.Right;
             listView1.Columns.Add("打卡事项", 60, HorizontalAlignment.Right);
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i < viewDays; i++)
             {
                 listView1.Columns.Add(DateTime.Now.AddDays(-i).ToShortDateString().Substring(5), 38, HorizontalAlignment.Center);
             }
@@ -190,7 +181,6 @@ namespace Daka
                 listView1.Items.Add(listViewItem);
             }
             listView1.EndUpdate();
-            //listView1.Update();
             listView1.Show();
 
         }
@@ -219,11 +209,16 @@ namespace Daka
             JsonIO save = new JsonIO(itemList);
             string jsonString = JsonSerializer.Serialize<JsonIO>(save);
             Console.WriteLine(jsonString);
-            if (!File.Exists(ItemListFileName))
+            if(!Directory.Exists(FilePath))
             {
-                File.Create(ItemListFileName).Close();
+                Directory.CreateDirectory(FilePath); 
+                if (!File.Exists(ItemListFilePath))
+                {
+                    File.Create(ItemListFilePath).Close();
+                }
             }
-            File.WriteAllText(ItemListFileName, jsonString);
+           
+            File.WriteAllText(ItemListFilePath, jsonString);
         }
 
 
@@ -270,19 +265,6 @@ namespace Daka
             
         }
 
-
-
-
-
-
-        /*private void ListView右键新建项(Object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Right)
-            {
-                
-            }
-        }*/
-
         /// <summary>
         /// 设置窗口-------------------待写
         /// </summary>
@@ -290,8 +272,18 @@ namespace Daka
         /// <param name="e"></param>
         private void 设置_Click(object sender, EventArgs e)
         {
-            SettingsForm form = new SettingsForm();
+            SettingsForm form = new SettingsForm(FilePath, viewDays);
+            form.changeSettingsDelegateEvent += ChangeSettings;
             form.ShowDialog(this);
+
+        }
+        /// <summary>
+        /// </summary>
+        /// <param name="x">viewDays</param>
+        private void ChangeSettings(int x)
+        {
+            viewDays = x;
+            Show_Listview();
         }
 
         private void 帮助ToolStripMenuItem1_Click(object sender, EventArgs e)
