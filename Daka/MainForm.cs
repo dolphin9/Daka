@@ -12,25 +12,22 @@ using System.Text.Json;
 
 namespace Daka
 {
-    public partial class main : Form
+    public partial class MainForm : Form
     {
         
         public ItemList itemList;
 
-        private string FilePath = System.Environment.CurrentDirectory;
+        private string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private const string ItemListFileName = "ItemList.json";
-        //private const string ItemListPath = "./";
-
-        //private const string version = "0.0";
+       
 
         /// <summary>
         /// 主窗口生成
         /// </summary>
-        public main()
+        public MainForm()
         {
             InitializeComponent();
             showDateTime();
-
 
             if (File.Exists(ItemListFileName))
             {
@@ -147,7 +144,7 @@ namespace Daka
         /////////////////////////////////////////
         ///分割线
         /////////////////////////////////////////
-        ///
+ 
         
         /// <summary>
         /// 新建打卡按钮
@@ -300,6 +297,15 @@ namespace Daka
         private void 帮助ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+
+            //MyUserSettings mus = new MyUserSettings();
+           // mus.BackgroundColor = Color.AliceBlue;
+            //this.DataBindings.Add(new Binding("BackColor", mus, "BackgroundColor"));
         }
     }
 }
