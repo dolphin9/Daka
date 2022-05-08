@@ -76,7 +76,6 @@
             // 
             // chooseFilePath
             // 
-            this.chooseFilePath.Enabled = false;
             this.chooseFilePath.Location = new System.Drawing.Point(372, 50);
             this.chooseFilePath.Name = "chooseFilePath";
             this.chooseFilePath.Size = new System.Drawing.Size(75, 23);
@@ -139,6 +138,7 @@
             this.resetButton.TabIndex = 8;
             this.resetButton.Text = "恢复默认";
             this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // button4
             // 

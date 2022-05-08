@@ -17,10 +17,7 @@ namespace Daka
         
         public ItemList itemList;
 
-        private string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Daka";
-        private const string ItemListFileName = "ItemList.json";
         private string ItemListFilePath;
-        private int viewDays = 5;
 
         /// <summary>
         /// 主窗口生成
@@ -30,7 +27,7 @@ namespace Daka
             InitializeComponent();
             showDateTime();
 
-            ItemListFilePath = Path.Combine(FilePath, ItemListFileName);
+            ItemListFilePath = Settings2.Default.FilePath + "//" + Settings2.Default.ItemListFileName;
 
             if (File.Exists(ItemListFilePath))
             {
@@ -166,7 +163,7 @@ namespace Daka
             listView1.BeginUpdate();
             listView1.View = View.Details;
             listView1.Columns.Add("打卡事项", 60, HorizontalAlignment.Right);
-            for (int i = 0; i < viewDays; i++)
+            for (int i = 0; i < Settings2.Default.viewDays; i++)
             {
                 listView1.Columns.Add(DateTime.Now.AddDays(-i).ToShortDateString().Substring(5), 38, HorizontalAlignment.Center);
             }
@@ -209,9 +206,9 @@ namespace Daka
             JsonIO save = new JsonIO(itemList);
             string jsonString = JsonSerializer.Serialize<JsonIO>(save);
             Console.WriteLine(jsonString);
-            if(!Directory.Exists(FilePath))
+            if(!Directory.Exists(Settings2.Default.FilePath))
             {
-                Directory.CreateDirectory(FilePath); 
+                Directory.CreateDirectory(Settings2.Default.FilePath); 
                 if (!File.Exists(ItemListFilePath))
                 {
                     File.Create(ItemListFilePath).Close();
@@ -266,24 +263,16 @@ namespace Daka
         }
 
         /// <summary>
-        /// 设置窗口-------------------待写
+        /// 设置窗口
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void 设置_Click(object sender, EventArgs e)
         {
-            SettingsForm form = new SettingsForm(FilePath, viewDays);
-            form.changeSettingsDelegateEvent += ChangeSettings;
+            SettingsForm form = new SettingsForm();
             form.ShowDialog(this);
-
-        }
-        /// <summary>
-        /// </summary>
-        /// <param name="x">viewDays</param>
-        private void ChangeSettings(int x)
-        {
-            viewDays = x;
             Show_Listview();
+            saveItemList();
         }
 
         private void 帮助ToolStripMenuItem1_Click(object sender, EventArgs e)

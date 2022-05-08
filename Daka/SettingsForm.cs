@@ -12,17 +12,19 @@ namespace Daka
 {
     public partial class SettingsForm : Form
     {
-        public SettingsForm(string filepath, int viewDays)
+        public SettingsForm()
         {
             InitializeComponent();
-            FilePathLabel.Text = filepath;
-            numericUpDown1.Value = viewDays;
+            FilePathLabel.Text =Settings2.Default.FilePath;
+            numericUpDown1.Value = Settings2.Default.viewDays;
         }
 
         private void chooseFilePath_Click(object sender, EventArgs e)
         {
-            //folderBrowserDialog1 = new FolderBrowserDialog();
-            //folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog1 = new FolderBrowserDialog();
+            folderBrowserDialog1.SelectedPath = FilePathLabel.Text;
+            folderBrowserDialog1.ShowDialog();
+            FilePathLabel.Text = folderBrowserDialog1.SelectedPath;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -36,18 +38,38 @@ namespace Daka
             numericUpDown1.Enabled = true;
         }
 
-        public delegate void changeSettingsDelegate(int viewdays);
-        public event changeSettingsDelegate changeSettingsDelegateEvent;
         private void button4_Click(object sender, EventArgs e)
         {
-            if (numericUpDown1.Enabled)
+            if (hasChanged())
             {
                 if (MessageBox.Show("确认修改？", "修改", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    changeSettingsDelegateEvent( (int)numericUpDown1.Value );
+                    Settings2.Default.viewDays = (int)numericUpDown1.Value;
+                    Settings2.Default.FilePath = FilePathLabel.Text;
+                    Settings2.Default.Save();
                     Close();
                 }
             }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            FilePathLabel.Text = Settings2.Default.FilePath;
+            numericUpDown1.Value = Settings2.Default.viewDays;
+        }
+
+        private bool hasChanged()
+        {
+            bool flag = false;
+
+            flag |= FilePathLabel.Text != Settings2.Default.FilePath;
+            flag |= numericUpDown1.Value != Settings2.Default.viewDays;
+
+            return flag;
         }
     }
 }

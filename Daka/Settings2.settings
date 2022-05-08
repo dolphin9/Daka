@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Daka" GeneratedClassName="Settings2">
+  <Profiles />
+  <Settings>
+    <Setting Name="FilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\ProgramData\Daka</Value>
+    </Setting>
+    <Setting Name="ItemListFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ItemList.json</Value>
+    </Setting>
+    <Setting Name="viewDays" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
